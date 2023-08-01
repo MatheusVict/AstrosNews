@@ -4,12 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.matheusvict.astrosnews.data.model.Post
-import dev.matheusvict.astrosnews.data.respository.MockAPIService
 import dev.matheusvict.astrosnews.data.respository.PostRepository
-import dev.matheusvict.astrosnews.data.respository.PostRepositoryImpl
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: PostRepository): ViewModel() {
+class HomeViewModel(private val repository: PostRepository) : ViewModel() {
 
 
     private val _listPost = MutableLiveData<List<Post>>()

@@ -9,9 +9,8 @@ import dev.matheusvict.astrosnews.data.respository.PostRepository
 import dev.matheusvict.astrosnews.data.respository.PostRepositoryImpl
 import kotlinx.coroutines.launch
 
-class HomeViewModel(): ViewModel() {
+class HomeViewModel(private val repository: PostRepository): ViewModel() {
 
-    val repository : PostRepository = PostRepositoryImpl(MockAPIService)
 
     private val _listPost = MutableLiveData<List<Post>>()
     val listPost

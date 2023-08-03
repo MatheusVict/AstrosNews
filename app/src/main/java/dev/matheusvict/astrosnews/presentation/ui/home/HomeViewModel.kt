@@ -9,12 +9,13 @@ import dev.matheusvict.astrosnews.core.RemoteException
 import dev.matheusvict.astrosnews.core.State
 import dev.matheusvict.astrosnews.data.model.Post
 import dev.matheusvict.astrosnews.data.respository.PostRepository
+import dev.matheusvict.astrosnews.domain.GetLatestPostUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: PostRepository) : ViewModel() {
+class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : ViewModel() {
 
 
     /*
@@ -53,7 +54,7 @@ class HomeViewModel(private val repository: PostRepository) : ViewModel() {
      */
     private fun fetchPosts() {
         viewModelScope.launch {
-            repository.listPosts()
+            getLatestPostUseCase.execute()
                 .onStart {
                     _listPost.postValue(State.Loading)
                     delay(800)

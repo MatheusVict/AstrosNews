@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.matheusvict.astrosnews.core.RemoteException
 import dev.matheusvict.astrosnews.core.State
+import dev.matheusvict.astrosnews.data.SpaceFlightNewsCategory
 import dev.matheusvict.astrosnews.data.model.Post
 import dev.matheusvict.astrosnews.data.respository.PostRepository
 import dev.matheusvict.astrosnews.domain.GetLatestPostUseCase
@@ -54,7 +55,7 @@ class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : Vi
      */
     private fun fetchPosts() {
         viewModelScope.launch {
-            getLatestPostUseCase()
+            getLatestPostUseCase(SpaceFlightNewsCategory.ARTICLES.value)
                 .onStart {
                     _listPost.postValue(State.Loading)
                     delay(800)

@@ -5,7 +5,7 @@ import dev.matheusvict.astrosnews.data.model.Post
 import dev.matheusvict.astrosnews.data.respository.PostRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetLatestPostUseCase(private val repository: PostRepository): UseCase.NoParam<List<Post>>() {
+class GetLatestPostUseCase(private val repository: PostRepository): UseCase<String ,List<Post>>() {
 
-    override suspend fun execute(): Flow<List<Post>> = repository.listPosts()
+    override suspend fun execute(param: String): Flow<List<Post>> = repository.listPosts(param)
 }

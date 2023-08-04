@@ -1,5 +1,6 @@
 package dev.matheusvict.astrosnews
 
+import dev.matheusvict.astrosnews.data.SpaceFlightNewsCategory
 import dev.matheusvict.astrosnews.data.model.Post
 import dev.matheusvict.astrosnews.domain.GetLatestPostUseCase
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +33,7 @@ class GetLatestPostUseCaseTest: KoinTest {
     @Test
     fun should_Return_a_NoNullable_Object_When_Connect_To_Repository() {
         runBlocking {
-            val result = getLatestPostUseCase()
+            val result = getLatestPostUseCase(SpaceFlightNewsCategory.ARTICLES.value)
 
             assertNotNull(result)
         }
@@ -41,7 +42,7 @@ class GetLatestPostUseCaseTest: KoinTest {
     @Test
     fun should_ReturnACorrectObject_When_Connect_To_Repository() {
         runBlocking {
-            val result = getLatestPostUseCase()
+            val result = getLatestPostUseCase(SpaceFlightNewsCategory.ARTICLES.value)
 
             assertTrue(result is Flow<List<Post>>)
         }
@@ -50,7 +51,7 @@ class GetLatestPostUseCaseTest: KoinTest {
     @Test
     fun should_ReturnANotEmptyList_When_Connect_To_Repository() {
         runBlocking {
-            val result = getLatestPostUseCase()
+            val result = getLatestPostUseCase(SpaceFlightNewsCategory.ARTICLES.value)
 
             assertFalse(result.first().isEmpty())
         }

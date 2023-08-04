@@ -54,7 +54,7 @@ class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : Vi
      */
     private fun fetchPosts() {
         viewModelScope.launch {
-            getLatestPostUseCase.execute()
+            getLatestPostUseCase()
                 .onStart {
                     _listPost.postValue(State.Loading)
                     delay(800)

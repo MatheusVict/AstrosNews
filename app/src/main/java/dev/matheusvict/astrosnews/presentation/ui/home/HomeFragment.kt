@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import dev.matheusvict.astrosnews.R
 import dev.matheusvict.astrosnews.core.State
+import dev.matheusvict.astrosnews.data.SpaceFlightNewsCategory
 import dev.matheusvict.astrosnews.data.model.Post
 import dev.matheusvict.astrosnews.databinding.FragmentHomeBinding
 import dev.matheusvict.astrosnews.presentation.adapter.PostListAdapter
@@ -32,7 +33,7 @@ class HomeFragment : Fragment() {
         initSnackBar()
         initRecyclerView()
         initOptionMenu()
-        
+
         return binding.root
     }
 
@@ -41,17 +42,17 @@ class HomeFragment : Fragment() {
             this.inflateMenu(R.menu.options_menu)
 
             menu.findItem(R.id.action_get_articles).setOnMenuItemClickListener {
-                Toast.makeText(context, "Get Articles", Toast.LENGTH_SHORT).show()
+                viewModel.fetchLatest(SpaceFlightNewsCategory.ARTICLES)
                 true
             }
 
             menu.findItem(R.id.action_get_blogs).setOnMenuItemClickListener {
-                Toast.makeText(context, "Get Blogs", Toast.LENGTH_SHORT).show()
+                viewModel.fetchLatest(SpaceFlightNewsCategory.BLOGS)
                 true
             }
 
             menu.findItem(R.id.action_get_reports).setOnMenuItemClickListener {
-                Toast.makeText(context, "Get reports", Toast.LENGTH_SHORT).show()
+                viewModel.fetchLatest(SpaceFlightNewsCategory.REPORTS)
                 true
             }
         }

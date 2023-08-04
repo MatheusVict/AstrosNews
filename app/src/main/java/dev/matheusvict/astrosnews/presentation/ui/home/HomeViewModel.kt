@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.matheusvict.astrosnews.R
 import dev.matheusvict.astrosnews.core.RemoteException
 import dev.matheusvict.astrosnews.core.State
 import dev.matheusvict.astrosnews.data.SpaceFlightNewsCategory
 import dev.matheusvict.astrosnews.data.model.Post
-import dev.matheusvict.astrosnews.data.respository.PostRepository
 import dev.matheusvict.astrosnews.domain.GetLatestPostUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
@@ -37,6 +37,12 @@ class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : Vi
     private val _snackBar = MutableLiveData<String?>(null)
     val snackbar: LiveData<String?> get() = _snackBar
 
+    private val _category = MutableLiveData<SpaceFlightNewsCategory>().apply {
+        value = SpaceFlightNewsCategory.ARTICLES
+    }
+
+    val category: LiveData<SpaceFlightNewsCategory> get() = _category
+
     fun onSnackBarShown() {
         _snackBar.value = null
     }
@@ -46,16 +52,23 @@ class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : Vi
         get() = _listPost
 
     init {
-        fetchPosts()
+        fetchLatest(_category.value ?: SpaceFlightNewsCategory.ARTICLES)
+    }
+
+    fun fetchLatest(category: SpaceFlightNewsCategory) {
+        fetchPosts(category.value)
+/*
+        _category.value = category
+*/
     }
 
     /**
      * Esse método coleta o fluxo do repositorio e atribui
      * o seu valor ao campo _listPost
      */
-    private fun fetchPosts() {
+    private fun fetchPosts(query: String) {
         viewModelScope.launch {
-            getLatestPostUseCase(SpaceFlightNewsCategory.ARTICLES.value)
+            getLatestPostUseCase(query)
                 .onStart {
                     _listPost.postValue(State.Loading)
                     delay(800)
@@ -67,6 +80,7 @@ class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : Vi
                 }
                 .collect { listPost ->
                     _listPost.postValue(State.Success(listPost))
+                    _category.value = enumValueOf<SpaceFlightNewsCategory>(query.uppercase())
                 }
         }
     }

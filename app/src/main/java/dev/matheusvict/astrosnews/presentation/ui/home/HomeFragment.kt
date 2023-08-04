@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import dev.matheusvict.astrosnews.R
 import dev.matheusvict.astrosnews.core.State
 import dev.matheusvict.astrosnews.data.model.Post
 import dev.matheusvict.astrosnews.databinding.FragmentHomeBinding
@@ -29,7 +31,30 @@ class HomeFragment : Fragment() {
         initBinding()
         initSnackBar()
         initRecyclerView()
+        initOptionMenu()
+        
         return binding.root
+    }
+
+    private fun initOptionMenu() {
+        with(binding.homeToolbar) {
+            this.inflateMenu(R.menu.options_menu)
+
+            menu.findItem(R.id.action_get_articles).setOnMenuItemClickListener {
+                Toast.makeText(context, "Get Articles", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            menu.findItem(R.id.action_get_blogs).setOnMenuItemClickListener {
+                Toast.makeText(context, "Get Blogs", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            menu.findItem(R.id.action_get_reports).setOnMenuItemClickListener {
+                Toast.makeText(context, "Get reports", Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
     }
 
     private fun initSnackBar() {

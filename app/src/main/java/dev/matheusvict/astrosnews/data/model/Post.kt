@@ -8,7 +8,7 @@ data class Post(
     val summary: String,
     val publishedAt: String,
     val updatedAt: String,
-    val launches: List<Any> = emptyList()
+    val launches: Array<Launch> = emptyArray()
 ) {
     fun hasLaunch(): Boolean = launches.isNotEmpty()
 

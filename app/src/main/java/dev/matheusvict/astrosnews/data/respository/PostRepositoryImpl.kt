@@ -1,18 +1,18 @@
 package dev.matheusvict.astrosnews.data.respository
 
 import dev.matheusvict.astrosnews.core.RemoteException
-import dev.matheusvict.astrosnews.data.model.Launch
 import dev.matheusvict.astrosnews.data.model.Post
+import dev.matheusvict.astrosnews.data.network.toModel
 import dev.matheusvict.astrosnews.data.services.SpaceFlightNewServices
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 
-class PostRepositoryImpl(private val service: SpaceFlightNewServices): PostRepository {
+class PostRepositoryImpl(private val service: SpaceFlightNewServices) : PostRepository {
 
     override suspend fun listPosts(category: String): Flow<List<Post>> = flow {
         try {
-            val postList = service.listPosts(category)
+            val postList = service.listPosts(category).toModel()
             emit(postList)
         } catch (ex: HttpException) {
             throw RemoteException("Unable to connect to SpaceFlight News Api")
@@ -25,7 +25,7 @@ class PostRepositoryImpl(private val service: SpaceFlightNewServices): PostRepos
         titleContains: String?
     ): Flow<List<Post>> = flow {
         try {
-            val postList = service.listPostsTitleContains(category, titleContains)
+            val postList = service.listPostsTitleContains(category, titleContains).toModel()
 
             emit(postList)
         } catch (ex: HttpException) {

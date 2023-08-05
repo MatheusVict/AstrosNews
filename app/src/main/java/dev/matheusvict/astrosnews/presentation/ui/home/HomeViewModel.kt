@@ -5,23 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.matheusvict.astrosnews.R
+import dev.matheusvict.astrosnews.core.Query
 import dev.matheusvict.astrosnews.core.RemoteException
 import dev.matheusvict.astrosnews.core.State
 import dev.matheusvict.astrosnews.data.SpaceFlightNewsCategory
 import dev.matheusvict.astrosnews.data.model.Post
 import dev.matheusvict.astrosnews.domain.GetLatestPostUseCase
+import dev.matheusvict.astrosnews.domain.GetLatestPostsTitleContainsUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : ViewModel() {
+class HomeViewModel(
+    private val getLatestPostUseCase: GetLatestPostUseCase,
+    private val getLatestPostsTitleContainsUseCase: GetLatestPostsTitleContainsUseCase
+) : ViewModel() {
 
-
-    /*
-    * Controla a visibilidade da progressbar
-    * */
     private val _progressBarVisible = MutableLiveData<Boolean>(false)
     val progressBarVisible: LiveData<Boolean> get() = _progressBarVisible
 
@@ -56,17 +56,11 @@ class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : Vi
     }
 
     fun fetchLatest(category: SpaceFlightNewsCategory) {
-        fetchPosts(category.value)
-/*
-        _category.value = category
-*/
+        fetchPosts(Query(category.value))
     }
 
-    /**
-     * Esse método coleta o fluxo do repositorio e atribui
-     * o seu valor ao campo _listPost
-     */
-    private fun fetchPosts(query: String) {
+
+    private fun fetchPosts(query: Query) {
         viewModelScope.launch {
             getLatestPostUseCase(query)
                 .onStart {
@@ -80,9 +74,34 @@ class HomeViewModel(private val getLatestPostUseCase: GetLatestPostUseCase) : Vi
                 }
                 .collect { listPost ->
                     _listPost.postValue(State.Success(listPost))
-                    _category.value = enumValueOf<SpaceFlightNewsCategory>(query.uppercase())
+                    _category.value = enumValueOf<SpaceFlightNewsCategory>(query.type.uppercase())
                 }
         }
+    }
+
+    private fun fetchPostsTitleContains(query: Query) {
+        viewModelScope.launch {
+            getLatestPostsTitleContainsUseCase(query)
+                .onStart {
+                    _listPost.postValue(State.Loading)
+                }
+                .catch {
+                    val exception = RemoteException("Unable to connect to SpaceFlightNews API")
+                    _listPost.postValue(State.Error(exception))
+                    _snackBar.value = exception.message
+                }
+                .collect { listPost ->
+                    _listPost.postValue(State.Success(listPost))
+                    _category.value = enumValueOf<SpaceFlightNewsCategory>(query.type.uppercase())
+                }
+        }
+    }
+
+    /*
+    * Make a search for active category
+    * */
+    fun searchPostTitleContains(searchString: String) {
+        fetchPostsTitleContains(Query(_category.value.toString(), searchString))
     }
 
     val helloText = Transformations.map(listPost) { state ->

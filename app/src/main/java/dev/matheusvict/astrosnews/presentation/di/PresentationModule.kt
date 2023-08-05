@@ -13,7 +13,7 @@ object PresentationModule {
 
     private fun viewModelModule(): Module {
         return module {
-            factory { HomeViewModel(get()) }
+            factory { HomeViewModel(get(), get()) }
         }
     }
 }

@@ -20,4 +20,17 @@ class PostRepositoryImpl(private val service: SpaceFlightNewServices): PostRepos
 
     }
 
+    override suspend fun listPostTitleContains(
+        category: String,
+        titleContains: String?
+    ): Flow<List<Post>> = flow {
+        try {
+            val postList = service.listPostsTitleContains(category, titleContains)
+
+            emit(postList)
+        } catch (ex: HttpException) {
+            throw RemoteException("Unable to connect to SpaceFlight News Api")
+        }
+    }
+
 }

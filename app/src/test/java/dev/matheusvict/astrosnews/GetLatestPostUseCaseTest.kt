@@ -2,7 +2,7 @@ package dev.matheusvict.astrosnews
 
 import dev.matheusvict.astrosnews.core.Query
 import dev.matheusvict.astrosnews.data.SpaceFlightNewsCategory
-import dev.matheusvict.astrosnews.data.model.Post
+import dev.matheusvict.astrosnews.data.entities.model.Post
 import dev.matheusvict.astrosnews.domain.GetLatestPostUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first

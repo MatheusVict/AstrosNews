@@ -1,6 +1,6 @@
-package dev.matheusvict.astrosnews.data.network
+package dev.matheusvict.astrosnews.data.entities.network
 
-import dev.matheusvict.astrosnews.data.model.Launch
+import dev.matheusvict.astrosnews.data.entities.model.Launch
 
 data class LaunchDTO(
     val id: String,

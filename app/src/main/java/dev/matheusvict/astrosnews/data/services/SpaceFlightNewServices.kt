@@ -1,7 +1,7 @@
 package dev.matheusvict.astrosnews.data.services
 
-import dev.matheusvict.astrosnews.data.model.Post
-import dev.matheusvict.astrosnews.data.network.PostDTO
+import dev.matheusvict.astrosnews.data.entities.model.Post
+import dev.matheusvict.astrosnews.data.entities.network.PostDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

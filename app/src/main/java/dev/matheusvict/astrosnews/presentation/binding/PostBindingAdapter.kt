@@ -10,7 +10,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import dev.matheusvict.astrosnews.R
-import dev.matheusvict.astrosnews.data.model.Post
+import dev.matheusvict.astrosnews.data.entities.model.Post
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset

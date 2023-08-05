@@ -1,6 +1,6 @@
-package dev.matheusvict.astrosnews.data.network
+package dev.matheusvict.astrosnews.data.entities.network
 
-import dev.matheusvict.astrosnews.data.model.Post
+import dev.matheusvict.astrosnews.data.entities.model.Post
 
 data class PostDTO(
     val id: Int,

@@ -1,8 +1,8 @@
 package dev.matheusvict.astrosnews.data.respository
 
 import dev.matheusvict.astrosnews.core.RemoteException
-import dev.matheusvict.astrosnews.data.model.Post
-import dev.matheusvict.astrosnews.data.network.toModel
+import dev.matheusvict.astrosnews.data.entities.model.Post
+import dev.matheusvict.astrosnews.data.entities.network.toModel
 import dev.matheusvict.astrosnews.data.services.SpaceFlightNewServices
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

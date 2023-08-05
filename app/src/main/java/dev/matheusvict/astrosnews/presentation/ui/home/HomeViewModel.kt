@@ -9,7 +9,7 @@ import dev.matheusvict.astrosnews.core.Query
 import dev.matheusvict.astrosnews.core.RemoteException
 import dev.matheusvict.astrosnews.core.State
 import dev.matheusvict.astrosnews.data.SpaceFlightNewsCategory
-import dev.matheusvict.astrosnews.data.model.Post
+import dev.matheusvict.astrosnews.data.entities.model.Post
 import dev.matheusvict.astrosnews.domain.GetLatestPostUseCase
 import dev.matheusvict.astrosnews.domain.GetLatestPostsTitleContainsUseCase
 import kotlinx.coroutines.delay

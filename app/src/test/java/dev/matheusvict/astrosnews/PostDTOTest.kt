@@ -1,8 +1,8 @@
 package dev.matheusvict.astrosnews
 
-import dev.matheusvict.astrosnews.data.model.Post
-import dev.matheusvict.astrosnews.data.network.LaunchDTO
-import dev.matheusvict.astrosnews.data.network.PostDTO
+import dev.matheusvict.astrosnews.data.entities.model.Post
+import dev.matheusvict.astrosnews.data.entities.network.LaunchDTO
+import dev.matheusvict.astrosnews.data.entities.network.PostDTO
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4

@@ -1,4 +1,4 @@
-package dev.matheusvict.astrosnews.data.model
+package dev.matheusvict.astrosnews.data.entities.model
 
 data class Launch(
     val id: String,

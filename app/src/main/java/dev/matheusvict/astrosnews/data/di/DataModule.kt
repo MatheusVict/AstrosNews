@@ -3,11 +3,13 @@ package dev.matheusvict.astrosnews.data.di
 import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dev.matheusvict.astrosnews.data.database.PostDatabase
 import dev.matheusvict.astrosnews.data.respository.PostRepository
 import dev.matheusvict.astrosnews.data.respository.PostRepositoryImpl
 import dev.matheusvict.astrosnews.data.services.SpaceFlightNewServices
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -20,12 +22,18 @@ object DataModule {
     private const val OK_HTTP = "Okk http"
 
     fun load() {
-        loadKoinModules(postModule() + networkModule())
+        loadKoinModules(postModule() + networkModule() + daoModule())
+    }
+
+    private fun daoModule(): Module {
+        return module {
+            single { PostDatabase.getInstance(androidContext()).dao }
+        }
     }
 
     private fun postModule(): Module {
         return module {
-            single<PostRepository> { PostRepositoryImpl(get()) }
+            single<PostRepository> { PostRepositoryImpl(service = get(), dao = get()) }
         }
     }
 

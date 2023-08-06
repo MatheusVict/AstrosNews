@@ -96,9 +96,14 @@ class HomeViewModel(
                     _snackBar.value = exception.message
                 }
                 .collect { listPost ->
-                    _listPost.postValue(State.Success(listPost))
-                    _category.value = enumValueOf<SpaceFlightNewsCategory>(query.type.uppercase())
+                    listPost.data?.let { list ->
+                        _listPost.postValue(State.Success(list))
+                    }
+                    listPost.error?.let { error ->
+                        _snackBar.value = error.message
+                    }
                 }
+            _category.value = enumValueOf<SpaceFlightNewsCategory>(query.type.uppercase())
         }
     }
 
